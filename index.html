@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Teoría de restricciones · Guía 30X</title>
+<meta name="description" content="Guía gratuita en PDF: cómo encontrar el único problema que frena el crecimiento de tu empresa. Con un caso real y un ejercicio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Página de descarga: el PDF ocupa el lugar del video; debajo, descargar y hacer el diagnóstico. */
+:root {
+  --bg: #000000;
+  --panel: #0E0F0B;
+  --line: #24261D;
+  --fg: #F4F5EF;
+  --muted: #A3A69A;
+  --soft: #6E7166;
+  --x: #E9FF7B;
+  --x-ink: #000000;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1000px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+.x { color: var(--x); }
+
+header { border-bottom: 1px solid var(--line); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 16px; }
+header img { height: 24px; display: block; }
+header span { font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--soft); }
+
+.hero { text-align: center; padding-block: clamp(40px, 7vw, 72px) 24px; }
+.eyebrow { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--x); border: 1px solid rgba(233,255,123,.35); border-radius: 999px; padding: 6px 14px; }
+.hero h1 { font-size: clamp(36px, 5.6vw, 64px); font-weight: 800; letter-spacing: -0.05em; line-height: 1; margin: 20px auto 0; max-width: 15ch; }
+.hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 54ch; margin: 18px auto 0; }
+
+/* El PDF en lugar del video */
+.doc { position: relative; max-width: 720px; margin: 36px auto 0; padding: clamp(24px, 4vw, 44px); background: radial-gradient(120% 90% at 50% 0%, #1A1C12 0%, var(--panel) 55%); border: 1px solid var(--line); border-radius: 22px; display: flex; justify-content: center; }
+.stack { position: relative; width: min(62%, 340px); aspect-ratio: 8.5 / 11; }
+.stack img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 6px; box-shadow: 0 24px 60px rgba(0,0,0,.6); }
+.stack .p3 { transform: translate(34%, 6%) rotate(6deg); opacity: .55; }
+.stack .p2 { transform: translate(17%, 3%) rotate(3deg); opacity: .8; }
+.stack .p1 { border: 1px solid #2c2f22; }
+.badge { position: absolute; left: 18px; bottom: 18px; background: var(--x); color: var(--x-ink); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; border-radius: 8px; padding: 6px 10px; }
+
+/* Botones */
+.ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 28px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; padding: 17px 26px; border-radius: 12px; min-width: 260px; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.btn.dl { background: var(--fg); color: var(--bg); }
+.btn.dl:hover { background: #fff; transform: translateY(-1px); }
+.btn.go { background: var(--x); color: var(--x-ink); }
+.btn.go:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(233,255,123,.22); }
+.btn:focus-visible { outline: 2px solid var(--x); outline-offset: 3px; }
+.note { margin-top: 14px; font-size: 13.5px; color: var(--soft); text-align: center; }
+
+/* Qué hay dentro */
+.inside { border-top: 1px solid var(--line); margin-top: clamp(48px, 7vw, 72px); padding-block: clamp(40px, 6vw, 64px); }
+.inside h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 700; letter-spacing: -0.035em; }
+.inside .sub { color: var(--muted); margin-top: 8px; max-width: 60ch; }
+.list { list-style: none; padding: 0; margin: 26px 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 32px; }
+.list li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); }
+.list b { font-size: 22px; font-weight: 800; letter-spacing: -0.05em; color: var(--soft); line-height: 1.1; }
+.list h3 { font-size: 16.5px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
+.list p { font-size: 14.5px; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+
+/* Diagnóstico */
+.diag { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; padding: clamp(24px, 4vw, 40px); display: grid; grid-template-columns: minmax(0, 1.4fr) auto; gap: 24px; align-items: center; }
+.diag h2 { font-size: clamp(24px, 3vw, 34px); font-weight: 800; letter-spacing: -0.045em; line-height: 1.05; }
+.diag p { color: var(--muted); margin-top: 10px; font-size: 15.5px; max-width: 52ch; }
+
+footer { border-top: 1px solid var(--line); margin-top: clamp(48px, 7vw, 72px); padding-block: 26px 36px; font-size: 13px; color: var(--soft); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+
+@media (max-width: 700px) {
+  .list { grid-template-columns: minmax(0, 1fr); }
+  .diag { grid-template-columns: minmax(0, 1fr); }
+  .btn { width: 100%; min-width: 0; }
+  header span { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img src="assets/30x-acento.svg" alt="30X">
+    <span>Guía gratuita</span>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div class="eyebrow">Guía gratuita · PDF de 10 páginas</div>
+    <h1>Tu empresa crece hasta su restricción. <span class="x">Ni un paso más.</span></h1>
+    <p class="lead">Cómo encontrar el único problema que hoy frena tu crecimiento. Con el caso real de una empresa que dejó de facturar entre 10 y 12 millones de dólares por un solo problema mal diagnosticado.</p>
+
+    <div class="doc" aria-label="Vista previa de la guía en PDF">
+      <div class="stack">
+        <img class="p3" src="assets/pag-03.png" alt="" loading="lazy">
+        <img class="p2" src="assets/pag-02.png" alt="" loading="lazy">
+        <img class="p1" src="assets/pag-01.png" alt="Portada de la guía: Tu empresa crece hasta su restricción. Ni un paso más.">
+      </div>
+      <span class="badge">PDF · Gratis</span>
+    </div>
+
+    <div class="ctas">
+      <a class="btn dl" id="descargar" href="guia-teoria-restricciones-30x.pdf" download="Guia-30X-Teoria-de-restricciones.pdf">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Descargar la guía
+      </a>
+      <a class="btn go" id="diagnostico" href="https://thirtyfold-constraint-finder.lovable.app/?utm_source=landing_guia&amp;utm_medium=web&amp;utm_campaign=constraint_finder&amp;utm_content=teoria-restricciones" target="_blank" rel="noopener">
+        Encontrar mi restricción →
+      </a>
+    </div>
+    <p class="note">El diagnóstico toma 2 minutos: 9 preguntas y un reporte al instante.</p>
+  </section>
+
+  <section class="wrap inside">
+    <h2>Qué hay dentro</h2>
+    <p class="sub">La idea de la teoría de restricciones aterrizada en un caso real, con las cifras completas y un ejercicio para hacer tu propia cuenta.</p>
+    <ol class="list">
+      <li><b>01</b><div><h3>Potencial y restricción</h3><p>Por qué tu empresa no crece más allá de su punto más estrecho.</p></div></li>
+      <li><b>02</b><div><h3>La meta que se repitió tres trimestres</h3><p>El caso real y lo que estaba en juego.</p></div></li>
+      <li><b>03</b><div><h3>La cuenta que nadie había hecho</h3><p>El embudo de contratación y el balance que destapó la restricción.</p></div></li>
+      <li><b>04</b><div><h3>Un cambio pequeño en el lugar correcto</h3><p>Síntoma contra restricción, y el arreglo.</p></div></li>
+      <li><b>05</b><div><h3>Los cuatro frentes de marketing</h3><p>El marco que muestra dónde se esconde la restricción más olvidada.</p></div></li>
+      <li><b>06</b><div><h3>Ejercicio: encuentra tu restricción</h3><p>Siete pasos y una hoja de trabajo.</p></div></li>
+    </ol>
+  </section>
+
+  <section class="wrap">
+    <div class="diag">
+      <div>
+        <h2>¿Y si estás resolviendo <span class="x">el problema equivocado?</span></h2>
+        <p>Responde 9 preguntas y descubre cuál de las cinco restricciones frena hoy tu negocio: conseguir clientes, cerrar ventas, oferta y precio, equipo, o sistemas y escala.</p>
+      </div>
+      <a class="btn go" href="https://thirtyfold-constraint-finder.lovable.app/?utm_source=landing_guia&amp;utm_medium=web&amp;utm_campaign=constraint_finder&amp;utm_content=teoria-restricciones-bloque" target="_blank" rel="noopener">Hacer el diagnóstico →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Guía 30X · Teoría de restricciones</span>
+    <span>30x.com</span>
+  </div>
+</footer>
+
+</body>
+</html>
